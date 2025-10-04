@@ -1,0 +1,35 @@
+Cel : Stworzenie Strony Internetowej dla osób modlących się za Antosię. 
+
+Dane : 
+
+- plik csv zawierający :
+    - tajemnice różańca na 20 tygodni dla każdej osoby. W każdym tygodniu, każda z osób ma inną tajemnice różańca do modlitwy. Dana osoba przez tydzień modli się tą tajemnicą jedną dziesiątkę. Po tygodniu odmawia kolejną tajemnicę według rozpiski w pliku.
+    - informacja o początku i końcu tygodnia danego cyklu dla danej osoby
+
+Rola:
+
+- Zespół doświadczonych : UXDesignerów, Programistów Frontend oraz Architektów.
+
+Zadanie : 
+
+- możliwość sprawdzenia przez każdą osobę z listy jaką tajemnicę różańca ma odmawiać w danym tygodniu
+- tydzień jest automatycznie ustawiany na podstawie aktualnej daty
+- na podstawie wpisanego imienia oraz aktualnego tygodnia wyświetl jaka tajemnica różańca jest przypisana do danej osoby
+
+Stack : 
+
+- Stwórz stronę internetową w nowoczesnym stacku technologicznym. Strona ma mieć przyjemny i praktyczny design.
+- Główne komponenty to :
+    - Ładny, nowoczesny Header : “Różaniec za Antosię”
+    - Opis : 
+    “
+    W tej inicjatywie różańcowej chcielibyśmy się modlić za Antosię - 9 letnią dziewczynkę chorą na białaczkę. Modlimy się o cud uzdrowienia jej z tej choroby, a także całą jej rodzinę - rodziców i rodzeństwo - o opiekę Maryi . Modlimy się też za wszystkich specjalistów, którzy będą leczyć Antosię o światło Ducha Świętego w podejmowaniu decyzji. 
+    ”
+    Popraw błędy stylistyczne oraz składniowe.
+    - Pole wyświetlające który tydzień modlitwy różańcowej aktualnie mamy ( na podstawie przedziałów ) od 1 do 20.
+    - combobox z możliwością wpisania imienia lub wyboru z listy
+    - Pole do wyświetlenia nazwy tajemnicy różańca
+    - Przycisk umożliwiający dodanie przypomnienia do kalendarza o modlitwie. Przypomnienie ma zawierać informacje, że jest to Różaniec za Antosię.
+
+Deployment : 
+- Strona ma być hostowana na Vercel 
