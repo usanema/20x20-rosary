@@ -1,0 +1,5 @@
+przerób funkcjonalność dodawania przypomnienia do kalendarza w ten sposób, aby : 
+- wykrywał urządzenie - Apple, Android, other
+- automatycznie otwierał aplikacje kalendarza w zaleności od systemu 
+i dodawał przypomnienie 
+- nie pobierał pliku .ics ( jest później problem na urządzeniach apple z tym)

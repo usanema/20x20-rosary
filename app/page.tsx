@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { rosarySchedule } from "@/lib/rosaryData";
 import { getCurrentWeek, getMysteryForPersonAndWeek } from "@/lib/weekCalculator";
+import { detectDevice } from "@/lib/deviceDetector";
 
 export default function Home() {
   const [selectedPerson, setSelectedPerson] = useState("");
@@ -44,35 +45,51 @@ export default function Home() {
     const endDate = new Date();
     endDate.setDate(endDate.getDate() + 7);
 
-    const event = {
-      title: `Różaniec za Antosię - ${mystery}`,
-      description: `Modlitwa różańcowa za Antosię. Tajemnica: ${mystery}`,
-      start: startDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
-      end: endDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
+    const title = `Różaniec za Antosię - ${mystery}`;
+    const description = `Modlitwa różańcowa za Antosię. Tajemnica: ${mystery}`;
+
+    const device = detectDevice();
+
+    // Format dates for calendar URLs
+    const formatDateForCalendar = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
     };
 
-    const icsContent = `BEGIN:VCALENDAR
+    const startFormatted = formatDateForCalendar(startDate);
+    const endFormatted = formatDateForCalendar(endDate);
+
+    if (device === "ios") {
+      // iOS/macOS - use data URI with webcal protocol
+      const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Różaniec za Antosię//PL
 BEGIN:VEVENT
 UID:${Date.now()}@rozaniec-za-antosie
-DTSTAMP:${event.start}
-DTSTART:${event.start}
-DTEND:${event.end}
-SUMMARY:${event.title}
-DESCRIPTION:${event.description}
+DTSTAMP:${startFormatted}
+DTSTART:${startFormatted}
+DTEND:${endFormatted}
+SUMMARY:${title}
+DESCRIPTION:${description}
 END:VEVENT
 END:VCALENDAR`;
 
-    const blob = new Blob([icsContent], { type: "text/calendar" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "rozaniec-za-antosie.ics";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+      const dataUrl = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+      window.open(dataUrl, "_blank");
+    } else if (device === "android") {
+      // Android - use Google Calendar intent
+      const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+        title
+      )}&details=${encodeURIComponent(description)}&dates=${startFormatted}/${endFormatted}`;
+
+      window.open(googleCalendarUrl, "_blank");
+    } else {
+      // Desktop/Other - use Google Calendar as fallback
+      const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+        title
+      )}&details=${encodeURIComponent(description)}&dates=${startFormatted}/${endFormatted}`;
+
+      window.open(googleCalendarUrl, "_blank");
+    }
   };
 
   return (
