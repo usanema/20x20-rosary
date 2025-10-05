@@ -2,10 +2,13 @@ import { weekDates } from "./rosaryData";
 
 export function getCurrentWeek(): number | null {
   const today = new Date();
+  // Reset time to start of day for accurate comparison
+  today.setHours(0, 0, 0, 0);
 
   for (const weekInfo of weekDates) {
-    const startDate = new Date(weekInfo.start);
-    const endDate = new Date(weekInfo.end);
+    // Parse dates with explicit time to avoid timezone issues
+    const startDate = new Date(weekInfo.start + "T00:00:00");
+    const endDate = new Date(weekInfo.end + "T23:59:59");
 
     if (today >= startDate && today <= endDate) {
       return weekInfo.week;
